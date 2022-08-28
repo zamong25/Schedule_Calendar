@@ -54,7 +54,7 @@
       <div class="eventInputBox">
         <div>Day</div>
         <div id="dayInputArea" class="inputArea">
-          inputarea
+        <!-- 1;월, ..., 7;일 -->
         </div>
       </div>
       <div class="eventInputBox">
@@ -64,34 +64,31 @@
             <option value="">-</option>
           </select> -->
           <div id="dateInit"></div>
-          <select class="timeInitHour" name="time" id="time"> 
-           
-          </select>
-          <select class="timeInitMinut" name="time" id="time"> 
-           
-          </select>
+          <select name="timeInitHour" id="timeInitHour"></select>
+          <select name="timeInitMinut" id="timeInitMinut"></select>
         </div>
       </div>
       <div class="eventInputBox">
         <div>進行状態</div>
         <div class="inputArea">
-          <select name="" id="">
-            <option value="">sample1</option>
-            <option value="">sample2</option>
-            <option value="">sample3</option>
+          <select name="eventStatus" id="eventStatus">
+            <option value="0">--선택--</option>
+            <option value="1">진행중</option>
+            <option value="2">완료</option>
+            <option value="3">보류</option>
           </select>
         </div>
       </div>
       <div class="eventInputBox">
         <div>カテゴリー</div>
         <div class="inputArea">
-          <input type="text">
+          <input type="text" placeholder="카테고리를 입력해주세요.">
         </div>
       </div>
       <div class="eventInputBox">
         <div>備考</div>
         <div class="inputArea">
-          <textarea name="" id="" cols="20" rows="10"></textarea>
+          <textarea name="" id="" cols="20" rows="10" placeholder="비고"></textarea>
         </div>
       </div>
       <div id="newEventBtnContainer">

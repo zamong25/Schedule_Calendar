@@ -32,8 +32,8 @@ function openModal(date) {
     //     dateInit.append(option);
     //   }
     // }
-    let timeInitHour = document.querySelector(".timeInitHour");
-    let timeInitMinut = document.querySelector(".timeInitMinut");
+    let timeInitHour = document.querySelector("#timeInitHour");
+    let timeInitMinut = document.querySelector("#timeInitMinut");
     for(let i = 1; i <= 24; i++){
       let option = document.createElement('option');
       option.innerText = `${i}`;
@@ -135,9 +135,13 @@ function saveEvent() {
     eventTitleInput.classList.remove('error');
     
     let day = getDay2(document.getElementById('dayInputArea').innerText);
-    let date = document.getElementById('dayInputArea').firstChild;
-    console.log(day);
-    console.log(date);
+    let date = document.getElementById('dateInit').innerText;
+    let h = document.getElementById('timeInitHour').innerText;
+    let m = document.getElementById('timeInitMinut').innerText;
+    console.log("요일 = " + day);
+    console.log("저장된 날짜 = " + date);
+    console.log("저장된  시= " + h);
+    console.log("저장된 분 = " + m);
     // fetch('http:localhost:3000/reg',{lan:lan, msg:msg})
     // .then(response => response.text())
     // .then(data => console.log(data))
