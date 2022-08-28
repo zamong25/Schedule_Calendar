@@ -34,7 +34,7 @@ function openModal(date) {
     // }
     let timeInitHour = document.querySelector("#timeInitHour");
     let timeInitMinut = document.querySelector("#timeInitMinut");
-    for(let i = 1; i <= 24; i++){
+    for(let i = 0; i <= 23; i++){
       let option = document.createElement('option');
       option.innerText = `${i}`;
       option.value = `${i}`;
@@ -136,11 +136,11 @@ function saveEvent() {
     
     let day = getDay2(document.getElementById('dayInputArea').innerText);
     let date = document.getElementById('dateInit').innerText;
-    let h = document.getElementById('timeInitHour').innerText;
-    let m = document.getElementById('timeInitMinut').innerText;
+    let h = document.getElementById('timeInitHour').value;
+    let m = document.getElementById('timeInitMinut').value;
     console.log("요일 = " + day);
     console.log("저장된 날짜 = " + date);
-    console.log("저장된  시= " + h);
+    console.log("저장된 시= " + h);
     console.log("저장된 분 = " + m);
     // fetch('http:localhost:3000/reg',{lan:lan, msg:msg})
     // .then(response => response.text())
@@ -154,6 +154,8 @@ function saveEvent() {
     localStorage.setItem('events', JSON.stringify(events));
     
     closeModal();
+    document.getElementById('timeInitHour').value = "";
+    document.getElementById('timeInitMinut').value ="";
   } else {
     eventTitleInput.classList.add('error');
   }
