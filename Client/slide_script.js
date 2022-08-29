@@ -16,19 +16,30 @@ const showModalWindow = () => {
 
    axios.post('http:localhost:3000/slide/', {dateStr: dateStr, tomo_dateStr: tomo_dateStr})
    .then(result=>{
-    const msg_box = document.getElementById('msg');
+    const first_msg = document.getElementById('first_msg');
+    const second_msg = document.getElementById('second_msg');
     // result.data.rows.map(c => {
     //   console.log(c.title)
     //   document.getElementById('msg').innerHTML = c.title;
     // })
     for(var i=0; i<result.data.rowCount; i++){
-      console.log((result.data.rows[i].date).slice(-5))
-      console.log(result.data.rows[i].title)
+      console.log("result", (result.data.rows[i].date).substr(0, 10))
+      // console.log(result.data.rows[i].date)
       const input = document.createElement('div');
-      input.innerHTML = result.data.rows[i].title;
+      // input.innerHTML = result.data.rows[i].title;
       // input.value = result.data.rows[i].title;
       // document.getElementById('msg').innerHTML = result.data.rows[i].title
-      msg_box.appendChild(input)
+      // msg_box.appendChild(input)
+
+      if(dateStr == (result.data.rows[i].date).substr(0, 10)){
+        console.log("dateStr", dateStr)
+        console.log("result.data.rows[i].date", result.data.rows[i].date)
+        input.innerHTML = result.data.rows[i].title;
+        first_msg.appendChild(input);
+      }else{
+        input.innerHTML = result.data.rows[i].title;
+        second_msg.appendChild(input);
+      }
       
     }
    })

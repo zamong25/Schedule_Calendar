@@ -1,138 +1,142 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calendar App Vanilla JS</title>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <!-- <script type="text/javascript" src="../Server/app.js"></script> -->
-    
-    <link rel="stylesheet" href="style.css">
-  </head>
-  <body onload="showModalWindow();">
-    
-    <div id="container">
-      <div id="header">
-        <div id="monthDisplay"></div>
-        <div>
-          <button id="backButton">Back</button>
-          <button id="nextButton">Next</button>
-        </div>
-      </div>
 
-      <div id="weekdays">
-        <div>Sunday</div>
-        <div>Monday</div>
-        <div>Tuesday</div>
-        <div>Wednesday</div>
-        <div>Thursday</div>
-        <div>Friday</div>
-        <div>Saturday</div>
-      </div>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calendar App Vanilla JS</title>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <!-- <script type="text/javascript" src="../Server/app.js"></script> -->
 
-      <div id="calendar"></div>
-      <div id="schedule">
-        <div>일정</div>
-        <div id="table">
-          <table>
-            <tr>
-                <th>타이틀</th>
-                <th>요일</th>
-                <th>날짜</th>
-                <th>카테고리</th>
-                <th>진행상황</th>
-                <th>비고</th>
-            </tr>
-         </table>
-        </div>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body onload="showModalWindow();">
+
+  <div id="container">
+    <div id="header">
+      <div id="monthDisplay"></div>
+      <div>
+        <button id="backButton">Back</button>
+        <button id="nextButton">Next</button>
       </div>
     </div>
 
-    <div id="newEventModal">
-      <h2>日程タイトル</h2>
-      <input id="eventTitleInput" placeholder="タイトル" />
-      <div class="eventInputBox">
-        <div>Day</div>
-        <div id="dayInputArea" class="inputArea">
-        <!-- 1;월, ..., 7;일 -->
-        </div>
+    <div id="weekdays">
+      <div>Sunday</div>
+      <div>Monday</div>
+      <div>Tuesday</div>
+      <div>Wednesday</div>
+      <div>Thursday</div>
+      <div>Friday</div>
+      <div>Saturday</div>
+    </div>
+
+    <div id="calendar"></div>
+    <div id="schedule">
+      <div>일정</div>
+      <div id="table">
+        <table>
+          <tr>
+            <th>타이틀</th>
+            <th>요일</th>
+            <th>날짜</th>
+            <th>카테고리</th>
+            <th>진행상황</th>
+            <th>비고</th>
+          </tr>
+        </table>
       </div>
-      <div class="eventInputBox">
-        <div>Date</div>
-        <div id="dateInputArea" class="inputArea" style="display: flex;">
-          <!-- <select class="dateInit" name="day">
+    </div>
+  </div>
+
+  <div id="newEventModal">
+    <h2>日程タイトル</h2>
+    <input id="eventTitleInput" placeholder="タイトル" />
+    <div class="eventInputBox">
+      <div>Day</div>
+      <div id="dayInputArea" class="inputArea">
+        <!-- 1;월, ..., 7;일 -->
+      </div>
+    </div>
+    <div class="eventInputBox">
+      <div>Date</div>
+      <div id="dateInputArea" class="inputArea" style="display: flex;">
+        <!-- <select class="dateInit" name="day">
             <option value="">-</option>
           </select> -->
-          <div id="dateInit"></div>
-          <select name="timeInitHour" id="timeInitHour"></select>
-          <select name="timeInitMinut" id="timeInitMinut"></select>
-        </div>
-      </div>
-      <div class="eventInputBox">
-        <div>進行状態</div>
-        <div class="inputArea">
-          <select name="eventStatus" id="eventStatus">
-            <option value="0">--선택--</option>
-            <option value="1">진행중</option>
-            <option value="2">완료</option>
-            <option value="3">보류</option>
-          </select>
-        </div>
-      </div>
-      <div class="eventInputBox">
-        <div>カテゴリー</div>
-        <div class="inputArea">
-          <input type="text" placeholder="카테고리를 입력해주세요.">
-        </div>
-      </div>
-      <div class="eventInputBox">
-        <div>備考</div>
-        <div class="inputArea">
-          <textarea name="" id="" cols="20" rows="10" placeholder="비고"></textarea>
-        </div>
-      </div>
-      <div id="newEventBtnContainer">
-        <button id="saveButton">Save</button>
-        <button id="cancelButton">Cancel</button>
+        <div id="dateInit"></div>
+        <select name="timeInitHour" id="timeInitHour"></select>
+        <select name="timeInitMinut" id="timeInitMinut"></select>
       </div>
     </div>
-
-    <div id="deleteEventModal">
-      <h2>Event</h2>
-
-      <p id="eventText"></p>
-
-      <button id="deleteButton">Delete</button>
-      <button id="closeButton">Close</button>
-    </div>
-
-    <div id="modalBackDrop"></div>
-
-    <div id="modal-overlay">
-      <div id="modal">
-
-          <div class="modal-header"> 
-              
-          </div>
-
-          <div class="slide">
-              <div id="msg" class="slide_item">1입니다</div>
-              <div class="slide_item">2입니다</div>
-              <div class="slide_prev_button slide_button">◀</div>
-              <div class="slide_next_button slide_button">▶</div>
-              <ul class="slide_pagination"></ul>
-          </div>
-
-          <div class="modal-footer">
-              <button id="close-modal">Close</button>
-              <button>1day Close</button>
-          </div>
-
+    <div class="eventInputBox">
+      <div>進行状態</div>
+      <div class="inputArea">
+        <select name="eventStatus" id="eventStatus">
+          <option value="0">--선택--</option>
+          <option value="1">진행중</option>
+          <option value="2">완료</option>
+          <option value="3">보류</option>
+        </select>
       </div>
+    </div>
+    <div class="eventInputBox">
+      <div>カテゴリー</div>
+      <div class="inputArea">
+        <input type="text" placeholder="카테고리를 입력해주세요.">
+      </div>
+    </div>
+    <div class="eventInputBox">
+      <div>備考</div>
+      <div class="inputArea">
+        <textarea name="" id="" cols="20" rows="10" placeholder="비고"></textarea>
+      </div>
+    </div>
+    <div id="newEventBtnContainer">
+      <button id="saveButton">Save</button>
+      <button id="cancelButton">Cancel</button>
+    </div>
   </div>
-    
-    <script src="./script.js"></script>
-    <script src="./slide_script.js"></script>
-    
-  </body>
+
+  <div id="deleteEventModal">
+    <h2>Event</h2>
+
+    <p id="eventText"></p>
+
+    <button id="deleteButton">Delete</button>
+    <button id="closeButton">Close</button>
+  </div>
+
+  <div id="modalBackDrop"></div>
+
+  <div id="modal-overlay">
+    <div id="modal">
+
+      <div class="modal-header">
+
+      </div>
+
+      <div class="slide">
+        <div id="first_msg" class="slide_item">1입니다</div>
+        <div id="second_msg" class="slide_item">2입니다</div>
+        <div class="slide_prev_button slide_button">◀</div>
+        <div class="slide_next_button slide_button">▶</div>
+        <ul class="slide_pagination"></ul>
+      </div>
+
+      <div class="modal-footer">
+        <button id="close-modal">Close</button>
+        <button>1day Close</button>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="./slide_script.js"></script>
+  <script src="./script.js"></script>
+
+
+</body>
+
 </html>
