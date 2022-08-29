@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const { Client } = require("pg");
- const dbInfo = require("../DB/dbInfo");
+const dbInfo = require("../DB/dbInfo");
 app.use(cors());
 
 app.use(express.json());
