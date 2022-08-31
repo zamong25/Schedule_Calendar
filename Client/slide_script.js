@@ -3,70 +3,70 @@ const openModalButton = document.getElementById("open-modal");
 const modalWindowOverlay = document.getElementById("modal-overlay");
 
 const showModalWindow = () => {
-  modalWindowOverlay.style.display = 'flex';
+  modalWindowOverlay.style.display = "flex";
 
   const date = new Date();
 
   const year = date.getFullYear();
-  const month = ('0' + (date.getMonth() + 1)).slice(-2);
-  const day = ('0' + date.getDate()).slice(-2);
-  const next_day = (1 + date.getDate());
-  const dateStr = year + '-' + month + '-' + day;
-  const tomo_dateStr = year + '-' + month + '-' + next_day;
+  const month = ("0" + (date.getMonth() + 1)).slice(-2);
+  const day = ("0" + date.getDate()).slice(-2);
+  const next_day = 1 + date.getDate();
+  const dateStr = year + "-" + month + "-" + day;
+  const tomo_dateStr = year + "-" + month + "-" + next_day;
 
-   axios.post('http:localhost:3000/slide/', {dateStr: dateStr, tomo_dateStr: tomo_dateStr})
-   .then(result=>{
-    const first_msg = document.getElementById('first_msg');
-    const second_msg = document.getElementById('second_msg');
-    // result.data.rows.map(c => {
-    //   console.log(c.title)
-    //   document.getElementById('msg').innerHTML = c.title;
-    // })
-    for(var i=0; i<result.data.rowCount; i++){
-      console.log("result", (result.data.rows[i].date).substr(0, 10))
-      // console.log(result.data.rows[i].date)
-      const input = document.createElement('div');
-      // input.innerHTML = result.data.rows[i].title;
-      // input.value = result.data.rows[i].title;
-      // document.getElementById('msg').innerHTML = result.data.rows[i].title
-      // msg_box.appendChild(input)
+  axios
+    .post("http:localhost:3000/slide/", {
+      dateStr: dateStr,
+      tomo_dateStr: tomo_dateStr,
+    })
+    .then((result) => {
+      const today_time = document.getElementById("today_time");
+      const today_schedule = document.getElementById("today_schedule");
+      const Input = document.createElement("input");
+      var br = document.createElement("br");
 
-      if(dateStr == (result.data.rows[i].date).substr(0, 10)){
-        console.log("dateStr", dateStr)
-        console.log("result.data.rows[i].date", result.data.rows[i].date)
-        input.innerHTML = result.data.rows[i].title;
-        first_msg.appendChild(input);
-      }else{
-        input.innerHTML = result.data.rows[i].title;
-        second_msg.appendChild(input);
+      for (var i = 0; i < result.data.rowCount; i++) {
+        console.log("result", result.data.rows[i].date.substr(0, 10));
+        // console.log(result.data.rows[i].date)
+
+        if (dateStr == result.data.rows[i].date.substr(0, 10)) {
+          console.log("dateStr", dateStr);
+          console.log("result.data.rows[i].date", result.data.rows[i].date);
+          // const newText = document.createTextNode(result.data.rows[i].date);
+
+          Input.value = result.data.rows[i].date;
+          today_time.appendChild(newInput.value);
+
+          // input.innerHTML = result.data.rows[i].title;
+          // today_time.appendChild(input);
+        } else {
+          input.innerHTML = result.data.rows[i].title;
+          second_msg.appendChild(input);
+        }
       }
-      
-    }
-   })
-}
+    });
+};
 // openModalButton.addEventListener("click", showModalWindow);
 
 // Hide Modal
 const closeModalButton = document.getElementById("close-modal");
 
 const hideModalWindow = () => {
-  modalWindowOverlay.style.display = 'none';
-}
+  modalWindowOverlay.style.display = "none";
+};
 
 closeModalButton.addEventListener("click", hideModalWindow);
-
 
 // Hide On Blur
 
 const hideModalWindowOnBlur = (e) => {
-
   if (e.target === e.currentTarget) {
-    console.log(e.target === e.currentTarget)
+    console.log(e.target === e.currentTarget);
     hideModalWindow();
   }
-}
+};
 
-modalWindowOverlay.addEventListener("click", hideModalWindowOnBlur)
+modalWindowOverlay.addEventListener("click", hideModalWindowOnBlur);
 
 // 슬라이크 전체 크기(width 구하기)
 const slide = document.querySelector(".slide");
@@ -156,4 +156,3 @@ for (let i = 0; i < maxSlide; i++) {
     paginationItems[currSlide - 1].classList.add("active");
   });
 }
-
