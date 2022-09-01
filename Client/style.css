@@ -1,4 +1,8 @@
+* {
+  font-family: sans-serif;
+}
 body {
+  height: 100%;
   display: flex;
   margin-top: 50px;
   justify-content: center;
@@ -19,7 +23,6 @@ button {
   padding: 10px;
   color: #d36c6c;
   font-size: 26px;
-  font-family: sans-serif;
   display: flex;
   justify-content: space-between;
 }
@@ -57,22 +60,50 @@ button {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  position: relative;
+}
+.dayExtend {
+  /* height: 100%; */
 }
 .day:hover {
   background-color: #e8faed;
 }
-
 .day + #currentDay {
   background-color: #e8f4fa;
 }
+.day > .hokaBtn {
+  border: 1px solid #ccc;
+  background-color: #fff;
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  width: 15px;
+  height: 15px;
+  border-radius: 10px;
+  color: #000;
+}
+
+.day > .daySquareInnerText {
+  width: 65%;
+  position: absolute;
+  top: 30px;
+  right: 8px;
+}
+.day > .daySquareInnerText > .event {
+  margin-bottom: 5px;
+}
 .event {
   font-size: 10px;
-  padding: 3px;
+  padding: 1px 3px;
   background-color: #58bae4;
   color: white;
-  border-radius: 5px;
+  border-radius: 10px;
   max-height: 55px;
   overflow: hidden;
+  text-indent: 5px;
+}
+.event:hover {
+  background-color: #3effbf;
 }
 .padding {
   cursor: default !important;
@@ -111,7 +142,6 @@ th {
   top: 100px;
   left: calc(50% - 175px);
   position: absolute;
-  font-family: sans-serif;
 }
 #eventTitleInput {
   padding: 10px;
@@ -170,14 +200,22 @@ th {
 }
 #newEventBtnContainer {
   margin-top: 15px;
+  display: flex;
+  justify-content: right;
 }
-#cancelButton,
+#newEventBtnContainer > button {
+  margin-right: 5px;
+  display: block;
+}
+#cancelButton {
+  background-color: #acb1bd;
+}
 #deleteButton {
-  background-color: #d36c6c;
+  background-color: #fd5b79;
 }
 #saveButton,
-#closeButton {
-  background-color: #92a1d1;
+#modifyButton {
+  background-color: #8a9dff;
 }
 #eventText {
   font-size: 14px;
@@ -187,192 +225,14 @@ th {
   top: 0px;
   left: 0px;
   z-index: 10;
+  position: fixed;
+  height: 100%;
   width: 100vw;
-  height: 100vh;
-  position: absolute;
   background-color: rgba(0, 0, 0, 0.8);
 }
-/* #scheduleInput{
-  
- 
-} */
+#scheduleInput {
+}
 #scheduleCategory {
   display: block;
   background-color: #92a1d1;
-}
-
-#modal-overlay {
-  width: 100%;
-  height: 100vh;
-  position: absolute;
-  background: rgba(0, 0, 0, 0.7);
-  background-color: rgba(255, 255, 255, 0.5);
-
-  display: none;
-  align-items: center;
-  justify-content: center;
-}
-
-#modal-overlay #modal {
-  max-width: 480px;
-  width: 100%;
-  background: rgb(217, 247, 255);
-  height: 300px;
-
-  display: flex;
-  flex-direction: column;
-  padding: 10px;
-  box-shadow: 5px 5px 5px 5px gray;
-}
-
-.slide {
-  /* layout */
-  display: flex;
-  flex-wrap: nowrap;
-  /* 컨테이너의 내용물이 컨테이너 크기(width, height)를 넘어설 때 보이지 않도록 하기 위해 hidden을 준다. */
-  overflow: hidden;
-
-  /* position */
-  /* slide_button의 position absolute가 컨테이너 안쪽에서 top, left, right offset이 적용될 수 있도록 relative를 준다. (기본값이 static인데, static인 경우 그 상위 컨테이너로 나가면서 현재 코드에선 html을 기준으로 offset을 적용시키기 때문) */
-  position: relative;
-
-  /* size */
-  width: 100%;
-}
-
-.slide_item {
-  /* layout */
-  display: flex;
-  align-items: top;
-  justify-content: center;
-
-  /* position - 버튼 클릭시 left offset값을 적용시키기 위해 */
-  position: relative;
-  left: 0px;
-
-  /* size */
-  width: 100%;
-  height: 300px;
-  /* flex item의 flex-shrink는 기본값이 1이므로 컨테이너 크기에 맞게 줄어드는데, 슬라이드를 구현할 것이므로 줄어들지 않도록 0을 준다. */
-  flex-shrink: 0;
-
-  /* transition */
-  transition: left 0.15s;
-}
-
-#modal .modal-footer {
-  position: relative;
-  bottom: -36px;
-  left: 480px;
-}
-
-.cloes_btn {
-  position: relative;
-  background-color: #008cba;
-  top: 5px;
-  right: 164px;
-}
-
-.oneday_btn {
-  position: relative;
-  width: 100px;
-  background-color: #008cba;
-  top: 5px;
-  right: 168px;
-}
-.today_title {
-  position: absolute;
-  top: 10px;
-}
-
-.today_time {
-  position: absolute;
-  top: 100px;
-  left: 100px;
-  font-size: 20px;
-  font-weight: bold;
-  font-family: "Hiragino Kaku Gothic Pro";
-}
-
-.today_schedule {
-  position: absolute;
-  top: 100px;
-  left: 160px;
-  font-family: "Hiragino Kaku Gothic Pro";
-  font-size: 20px;
-  font-weight: bold;
-}
-.today_time_1 {
-  position: absolute;
-  top: 133px;
-  left: 100px;
-  font-size: 17px;
-  text-overflow: ellipsis;
-}
-
-.today_schedule_1 {
-  position: absolute;
-  top: 129px;
-  left: 160px;
-  text-overflow: ellipsis;
-}
-
-.slide_button {
-  /* layout */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  /* position */
-  position: absolute;
-  /* 버튼이 중앙에 위치하게 하기위해 계산 */
-  top: 130px;
-  font-size: 30px;
-
-  /* size */
-  width: 32px;
-  height: 32px;
-
-  /* style */
-  border-radius: 100%;
-  /* background-color: #7abad1; */
-  cursor: pointer;
-}
-
-.slide_prev_button {
-  display: none;
-  left: 10px;
-}
-.slide_next_button {
-  right: 10px;
-}
-
-/* 페이지네이션 스타일 */
-ul,
-li {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
-.slide_pagination {
-  /* layout */
-  display: flex;
-  gap: 5px;
-
-  /* position */
-  position: absolute;
-  bottom: 0;
-  /* left:50%, translateX(-50%)를 하면 가로 가운데로 위치시킬 수 있다. */
-  left: 50%;
-  transform: translateX(-50%);
-}
-.slide_pagination > li {
-  /* 현재 슬라이드가 아닌 것은 투명도 부여 */
-  color: #b1d2fd88;
-  cursor: pointer;
-  font-size: 25px;
-}
-.slide_pagination > li.active {
-  /* 현재 슬라이드 색상은 투명도 없이 */
-  color: #2472e0;
 }

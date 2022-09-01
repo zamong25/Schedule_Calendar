@@ -9,6 +9,7 @@
     <script type="text/javascript" src="./jquery-3.6.0.js"></script>
 
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="./slide_style.css" />
   </head>
 
   <body onload="showModalWindow();">
@@ -83,7 +84,12 @@
       <div class="eventInputBox">
         <div>カテゴリー</div>
         <div class="inputArea">
-          <input type="text" placeholder="카테고리를 입력해주세요." />
+          <input
+            id="categoryInput"
+            type="text"
+            placeholder="카테고리를 입력해주세요."
+            onkeypress="checkCategory()"
+          />
         </div>
       </div>
       <div class="eventInputBox">
@@ -91,7 +97,7 @@
         <div class="inputArea">
           <textarea
             name=""
-            id=""
+            id="refer"
             cols="20"
             rows="10"
             placeholder="비고"
@@ -100,7 +106,9 @@
       </div>
       <div id="newEventBtnContainer">
         <button id="saveButton">Save</button>
+        <button id="modifyButton">Modify</button>
         <button id="cancelButton">Cancel</button>
+        <button id="deleteButton">Delete</button>
       </div>
     </div>
 
@@ -108,9 +116,6 @@
       <h2>Event</h2>
 
       <p id="eventText"></p>
-
-      <button id="deleteButton">Delete</button>
-      <button id="closeButton">Close</button>
     </div>
 
     <div id="modalBackDrop"></div>
