@@ -6,6 +6,7 @@
     <title>Calendar App Vanilla JS</title>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <!-- <script type="text/javascript" src="../Server/app.js"></script> -->
+    <script type="text/javascript" src="./jquery-3.6.0.js"></script>
 
     <link rel="stylesheet" href="style.css" />
   </head>
@@ -120,14 +121,18 @@
 
         <div class="slide">
           <div class="slide_item">
-            <h1 class="today_title">Today's Schedule</h1>
-            <div id="today_time" class="today_time">today_time</div>
-            <div id="today_schedule" class="today_schedule">today_schedule</div>
+            <h1 class="today_title">今日の日程</h1>
+            <div id="today_time" class="today_time">時間</div>
+            <div id="today_time_1" class="today_time_1"></div>
+            <div id="today_schedule" class="today_schedule">日程</div>
+            <div id="today_schedule_1" class="today_schedule_1"></div>
           </div>
           <div class="slide_item">
-            <h1>Tomorrow's Schedule</h1>
-            <div class="today_time">Tomorrow_time</div>
-            <div class="today_schedule">Tomorrow_schedule</div>
+            <h1>明日の日程</h1>
+            <div id="tomo_time" class="today_time">時間</div>
+            <div id="tomo_time_1" class="today_time_1"></div>
+            <div id="tomo_schedule" class="today_schedule">日程</div>
+            <div id="tomo_schedule_1" class="today_schedule_1"></div>
           </div>
           <div class="slide_prev_button slide_button">◀</div>
           <div class="slide_next_button slide_button">▶</div>
@@ -135,8 +140,8 @@
         </div>
 
         <div class="modal-footer">
-          <button id="close-modal" class="cloes_btn">Close</button>
-          <button class="oneday_btn">1day Close</button>
+          <button id="close-modal" class="cloes_btn">閉じる</button>
+          <button class="oneday_btn">1日閉じる</button>
         </div>
       </div>
     </div>

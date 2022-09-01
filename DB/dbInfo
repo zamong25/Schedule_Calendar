@@ -1,10 +1,10 @@
 const dbInfo = {
-    user: "postgres",
-    password: "1234",
-    port: 5432,
-    host: "localhost",
-    database: "postgres",
-  };
+  user: "postgres",
+  password: "2503",
+  port: 5433,
+  host: "localhost",
+  database: "postgres",
+};
 
-  module.exports = dbInfo
-  //외부에서 불러쓸 수 있게 하는 구문
+module.exports = dbInfo;
+//외부에서 불러쓸 수 있게 하는 구문
