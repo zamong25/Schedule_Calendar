@@ -121,8 +121,8 @@ function openModal(data, modify) {
     }
   }
 
-  newEventModal.style.display = "block";
-  backDrop.style.display = "block";
+  newEventModal.style.display = "block"; //
+  backDrop.style.display = "block"; //
   if (modify) {
     deleteBtn.style.display = "block";
     modifyBtn.style.display = "block";
@@ -183,7 +183,7 @@ function Init() {
   this.paddingDays = weekdays.indexOf(dateString.split(", ")[0]); //1
 
   document.getElementById("monthDisplay").innerText = `${dt.toLocaleDateString(
-    "en-us",
+    "ja-jp",
     { month: "long" }
   )} ${year}`;
 
@@ -289,33 +289,13 @@ function Init() {
   console.log("dataArray.length " + dataArray.length);
   console.log(" dataTable.childElementCount " + dataTable.childElementCount);
 
-  // if(dataTable.childElementCount == dataArray.length){
-  //   return;
-  // }
-
-  // let whileCount = 1;
-  // if(dataArray.length != 0 && dataTable.childElementCount > 0 && dataArray.length >= dataTable.childElementCount){
-
-  //   whileCount = 1;
-  // }
-  // else if(dataArray.length == 0 || dataArray.length < dataTable.childElementCount || (dataArray.length > 0 && dataArray.length > dataTable.childElementCount)){
-  //   whileCount = dataArray.length;
-
-  //   while ( dataTable.hasChildNodes() )
-  //   {
-  //     dataTable.removeChild( dataTable.firstChild );
-  //   }
-  // }
-  // else{
   while (dataTable.hasChildNodes()) {
     dataTable.removeChild(dataTable.firstChild);
   }
-  // }
 
   for (let i = 0; i < dataArray.length; i++) {
     const eventTr = document.createElement("tr");
 
-    //let data = dataArray[dataArray.length - whileCount + i];
     let data = dataArray[i];
     let obj = Object.keys(data);
 
@@ -485,7 +465,7 @@ function initButtons() {
 function getDay2(day) {
   //날짜문자열 형식은 자유로운 편
 
-  var week = ["일", "월", "화", "수", "목", "금", "토"];
+  var week = ["日", "月", "火", "水", "木", "金", "土"];
 
   var dayOfWeek = new Date(day).getDay();
 
@@ -494,7 +474,7 @@ function getDay2(day) {
 function getDay3(day) {
   //날짜문자열 형식은 자유로운 편
 
-  var week = ["일", "월", "화", "수", "목", "금", "토"];
+  var week = ["日", "月", "火", "水", "木", "金", "土"];
 
   return week[day];
 }
