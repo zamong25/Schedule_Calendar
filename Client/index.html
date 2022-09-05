@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Calendar App Vanilla JS</title>
+    <title>Schedule Calendar</title>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <!-- <script type="text/javascript" src="../Server/app.js"></script> -->
     <script type="text/javascript" src="./jquery-3.6.0.js"></script>
@@ -34,19 +34,21 @@
 
       <div id="calendar"></div>
       <div id="schedule">
-        <div>日程</div>
-        <div id="table">
-          <table>
-            <tr>
-              <th>タイトル</th>
-              <th>曜日</th>
-              <th>日付</tr>
-              <th>カテゴリ</th>
-              <th>進行状態</th>
-              <th>備考</th>
-            </tr>
-          </table>
-        </div>
+        <div class="scheduleTitle">日程</div>
+        <table id="table">
+          <tbody id="tbody">
+            <thead>
+              <tr>
+                <th>タイトル</th>
+                <th>曜日</th>
+                <th>日付</th>
+                <th>カテゴリ</th>
+                <th>進行状態</th>
+                <th>備考</th>
+              </tr>
+            </thead>
+          </tbody>
+        </table>
       </div>
     </div>
 

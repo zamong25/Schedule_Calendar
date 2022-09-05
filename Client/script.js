@@ -9,6 +9,7 @@ const newEventModal = document.getElementById("newEventModal");
 const deleteEventModal = document.getElementById("deleteEventModal");
 const backDrop = document.getElementById("modalBackDrop");
 const eventTitleInput = document.getElementById("eventTitleInput");
+
 const weekdays = [
   "Sunday",
   "Monday",
@@ -57,7 +58,6 @@ function openModal(data, modify) {
     dateInit.innerText = `${date[1]}-${date[2].split(" ")[0]}`;
     title.value = data.title;
 
-    console.log(data.sts);
     stateInit[parseInt(data.sts)].selected = true;
     categoryInit.value = data.cat;
     let _hour = data.date.split(" ");
@@ -133,6 +133,7 @@ function openModal(data, modify) {
     saveBtn.style.display = "block";
   }
 }
+
 function load() {
   axios.post("http:localhost:3000/load").then((result) => {
     if (result.data == "0") {
@@ -148,7 +149,6 @@ function load() {
           sts: c.state,
           refer: c.refer,
         };
-        // console.log(data);
 
         dataArray.push(data);
       });
@@ -208,10 +208,14 @@ function Init() {
     }
 
     if (i > this.paddingDays) {
-      daySquare.innerText = i - this.paddingDays; // 1~31
+      //daySquare.innerText =  i - this.paddingDays;// 1~31
+      const dayInnerFrame = document.createElement("div");
+      dayInnerFrame.innerText = i - this.paddingDays; // 1~31
       const daySquareInnerText = document.createElement("div");
+      dayInnerFrame.classList.add("dayInnerFrame");
       daySquareInnerText.classList.add("daySquareInnerText");
-      daySquare.appendChild(daySquareInnerText);
+      daySquare.appendChild(dayInnerFrame);
+      dayInnerFrame.appendChild(daySquareInnerText);
       // let eventForDay;
 
       if (dataArray.length > 0) {
@@ -232,13 +236,28 @@ function Init() {
             if (childCount.length == 3) {
               let hokaBtn = document.createElement("div");
               hokaBtn.classList.add("hokaBtn");
-              daySquare.appendChild(hokaBtn);
+              dayInnerFrame.appendChild(hokaBtn);
+              hokaBtn.innerHTML = "+";
               hokaBtn.addEventListener("click", (event) => {
                 event.stopPropagation();
                 for (let i = 0; i < childCount.length; i++) {
-                  childCount[i].style.display = "block";
+                  if (childCount[i].style.display == "block" && i > 1) {
+                    childCount[i].style.display = "none";
+                    dayInnerFrame.classList.remove("extendFrame");
+                    dayInnerFrame.classList.remove("focus");
+                    daySquareInnerText.classList.remove("daySquareInnerText2");
+                    // daySquareInnerText.style.height = 'auto';
+                    daySquareInnerText.style.paddingBottom = "0px";
+                    hokaBtn.innerHTML = "+";
+                  } else {
+                    childCount[i].style.display = "block";
+                    dayInnerFrame.classList.add("extendFrame");
+                    dayInnerFrame.classList.add("focus");
+                    daySquareInnerText.classList.add("daySquareInnerText2");
+                    daySquareInnerText.style.paddingBottom = "10px";
+                    hokaBtn.innerHTML = "-";
+                  }
                 }
-                daySquare.classList.add("dayExtend");
               });
             }
             if (childCount.length > 2) {
@@ -266,6 +285,58 @@ function Init() {
 
     calendar.appendChild(daySquare);
   }
+  const dataTable = document.getElementById("tbody");
+  console.log("dataArray.length " + dataArray.length);
+  console.log(" dataTable.childElementCount " + dataTable.childElementCount);
+
+  // if(dataTable.childElementCount == dataArray.length){
+  //   return;
+  // }
+
+  // let whileCount = 1;
+  // if(dataArray.length != 0 && dataTable.childElementCount > 0 && dataArray.length >= dataTable.childElementCount){
+
+  //   whileCount = 1;
+  // }
+  // else if(dataArray.length == 0 || dataArray.length < dataTable.childElementCount || (dataArray.length > 0 && dataArray.length > dataTable.childElementCount)){
+  //   whileCount = dataArray.length;
+
+  //   while ( dataTable.hasChildNodes() )
+  //   {
+  //     dataTable.removeChild( dataTable.firstChild );
+  //   }
+  // }
+  // else{
+  while (dataTable.hasChildNodes()) {
+    dataTable.removeChild(dataTable.firstChild);
+  }
+  // }
+
+  for (let i = 0; i < dataArray.length; i++) {
+    const eventTr = document.createElement("tr");
+
+    //let data = dataArray[dataArray.length - whileCount + i];
+    let data = dataArray[i];
+    let obj = Object.keys(data);
+
+    for (let i = 0; i < obj.length; i++) {
+      const key = obj[i];
+
+      if (key == "date_no") {
+        continue;
+      }
+
+      const eventTd = document.createElement("th");
+      if (key == "day") {
+        console.log(data[key]);
+        eventTd.innerText = getDay3(data[key]);
+      } else eventTd.innerText = data[key];
+
+      eventTr.appendChild(eventTd);
+    }
+
+    dataTable.appendChild(eventTr);
+  }
 }
 
 function closeModal() {
@@ -290,12 +361,6 @@ function saveEvent() {
     let sts = document.getElementById("eventStatus").value;
     let cat = document.getElementById("categoryInput").value;
     let refer = document.getElementById("refer").value;
-    console.log("title  " + eventTitleInput.value.length);
-    console.log("day  " + day.length);
-    console.log("date  " + date.length);
-    console.log("sts  " + sts.length);
-    console.log("cat  " + cat.length);
-    console.log("refer  " + refer.length);
 
     axios
       .post("http:localhost:3000/reg", {
@@ -309,12 +374,12 @@ function saveEvent() {
       .then((result) => {
         result.data.map((c) => {
           const data = {
-            day: day,
             title: eventTitleInput.value,
+            day: day,
             date: `${clicked} ${h}:${m}`,
             date_no: c.date_no,
-            sts: sts,
             cat: cat,
+            sts: sts,
             refer: refer,
           };
           dataArray.push(data);
@@ -330,13 +395,6 @@ function saveEvent() {
 
 function deleteEvent() {
   let data = dataArray[dataArrayIndex];
-  // console.log(data);
-  // console.log("title  " + data.title.length);
-  // console.log("day  " + data.day.length);
-  // console.log("date  " + data.date.length);
-  // console.log("state  " + data.sts.length);
-  // console.log("category  " + data.cat.length);
-  // console.log("refer  " + data.refer.length);
 
   axios
     .post("http:localhost:3000/del", {
@@ -350,7 +408,8 @@ function deleteEvent() {
     })
     .then((result) => {
       if (result.data === "OK") {
-        delete dataArray[dataArrayIndex];
+        //delete dataArray[dataArrayIndex];
+        dataArray.splice(dataArrayIndex, 1);
         closeModal();
       }
     });
@@ -358,7 +417,7 @@ function deleteEvent() {
 
 function ModifyEvent() {
   let data = dataArray[dataArrayIndex];
-  let beforeTitle = data.title;
+  let beforeDate = data.date;
   let day = document.getElementById("dayInputArea").innerText;
   let date = document.getElementById("dateInit").innerText;
   let h = document.getElementById("timeInitHour").value;
@@ -369,11 +428,12 @@ function ModifyEvent() {
   let newDate = data.date.split(" ");
 
   const dataObj = {
-    day: day,
     title: eventTitleInput.value,
+    day: day,
     date: `${newDate[0]} ${h}:${m}`,
-    sts: sts,
+    date_no: data.date_no,
     cat: cat,
+    sts: sts,
     refer: refer,
   };
 
@@ -381,10 +441,11 @@ function ModifyEvent() {
 
   axios
     .post("http:localhost:3000/mod", {
-      beforeTitle: beforeTitle,
+      beforeDate: beforeDate,
       day: dataObj.day,
       title: dataObj.title,
       date: dataObj.date,
+      date_no: dataObj.data_no,
       sts: dataObj.sts,
       cat: dataObj.cat,
       refer: dataObj.refer,
@@ -400,12 +461,15 @@ function initButtons() {
   document.getElementById("nextButton").addEventListener("click", () => {
     nav++;
 
-    load();
+    //load();
+    Init();
   });
 
   document.getElementById("backButton").addEventListener("click", () => {
     nav--;
-    load();
+
+    Init();
+    //load();
   });
 
   document.getElementById("saveButton").addEventListener("click", saveEvent);
@@ -426,6 +490,13 @@ function getDay2(day) {
   var dayOfWeek = new Date(day).getDay();
 
   return dayOfWeek;
+}
+function getDay3(day) {
+  //날짜문자열 형식은 자유로운 편
+
+  var week = ["일", "월", "화", "수", "목", "금", "토"];
+
+  return week[day];
 }
 
 function checkCategory() {
