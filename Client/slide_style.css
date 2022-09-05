@@ -111,7 +111,10 @@
   position: absolute;
   top: 129px;
   left: 160px;
+  overflow: hidden;
+  white-space: nowrap;
   text-overflow: ellipsis;
+  font-size: 14px;
 }
 
 .slide_button {

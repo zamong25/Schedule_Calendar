@@ -133,7 +133,6 @@ function openModal(data, modify) {
     saveBtn.style.display = "block";
   }
 }
-
 function load() {
   axios.post("http:localhost:3000/load").then((result) => {
     if (result.data == "0") {
@@ -149,7 +148,7 @@ function load() {
           sts: c.state,
           refer: c.refer,
         };
-        console.log(data);
+        // console.log(data);
 
         dataArray.push(data);
       });
