@@ -171,27 +171,50 @@ button {
   width: 100%;
   border-collapse: collapse;
   border-radius: 5px;
+  table-layout: fixed;
   overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 th {
+  /* width: 30%; */
   text-align: left;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.table_title {
+  width: 25%;
+}
+
+.table_day {
+  width: 20%;
 }
 
 thead {
   font-weight: bold;
   color: #fff;
   background: #98b8fd;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 td,
 th {
   padding: 1em 0.5em;
   vertical-align: middle;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 td {
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   background: #fff;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 /* #schedule table tr,th{  
   border:1px solid #58bae4;
