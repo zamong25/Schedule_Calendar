@@ -2,6 +2,10 @@
 const openModalButton = document.getElementById("open-modal");
 const modalWindowOverlay = document.getElementById("modal-overlay");
 
+// 버튼 엘리먼트 선택하기
+const prevBtn = document.querySelector(".slide_prev_button");
+const nextBtn = document.querySelector(".slide_next_button");
+
 const showModalWindow = () => {
   modalWindowOverlay.style.display = "flex";
 
@@ -10,7 +14,7 @@ const showModalWindow = () => {
   const year = date.getFullYear();
   const month = ("0" + (date.getMonth() + 1)).slice(-2);
   const day = ("0" + date.getDate()).slice(-2);
-  const next_day = 1 + date.getDate();
+  const next_day = "0" + (1 + date.getDate());
   const dateStr = year + "-" + month + "-" + day;
   const tomo_dateStr = year + "-" + month + "-" + next_day;
 
@@ -40,11 +44,12 @@ const showModalWindow = () => {
             result.data.rows[i].title;
         }
       }
+
       // console.log("today_obj", Object.keys(today_obj));
       // console.log("tomo_obj", Object.keys(tomo_obj));
 
       // console.log(dateStr);
-      // console.log(result.data.rows[0].date);
+      // console.log(tomo_obj);
       // console.log(array_today_date[0]);
 
       array_today_date.push(Object.keys(today_obj).sort());
@@ -54,7 +59,7 @@ const showModalWindow = () => {
       // console.log("array_today_date", array_today_date.length);
       // console.log("array_today_title", array_today_title);
 
-      for (var i = 0; i < 4; i++) {
+      for (var i = 0; i < array_today_date[0].length; i++) {
         const first_div = document.createElement("div");
         const second_div = document.createElement("div");
         const today_time_text = document.createTextNode(array_today_date[0][i]);
@@ -66,6 +71,25 @@ const showModalWindow = () => {
         second_div.appendChild(today_schedule_text);
         today_schedule.appendChild(second_div);
 
+        if (i > 2) {
+          const etc_div = document.createElement("div");
+          const etc_text =
+            "...他 " +
+            (array_today_date[0].length -
+              1 -
+              i.toString() +
+              "件の日程があります。");
+          const etc_text_node = document.createTextNode(etc_text);
+          etc_div.appendChild(etc_text_node);
+          today_schedule.append(etc_div);
+
+          break;
+        }
+
+        // console.log("i", i);
+      }
+
+      for (var i = 0; i < array_tomo_date[0].length; i++) {
         const third_div = document.createElement("div");
         const fourth_div = document.createElement("div");
         const tomo_time_text = document.createTextNode(array_tomo_date[0][i]);
@@ -76,30 +100,43 @@ const showModalWindow = () => {
         tomo_time.appendChild(third_div);
         fourth_div.appendChild(tomo_schedule_text);
         tomo_schedule.appendChild(fourth_div);
-      }
-      console.log(array_today_date.length);
-      console.log(array_tomo_date.length);
-      if (array_today_date[0].length > 4) {
-        const etc_div = document.createElement("div");
-        const etc_text =
-          "...他 " +
-          (array_today_date[0].length - 4).toString() +
-          "件の日程があります。";
-        const etc_text_node = document.createTextNode(etc_text);
-        etc_div.appendChild(etc_text_node);
-        today_schedule.append(etc_div);
-      }
 
-      if (array_tomo_date[0].length > 4) {
-        const etc_div = document.createElement("div");
-        const etc_text =
-          "...他 " +
-          (array_tomo_date[0].length - 4).toString() +
-          "件の日程があります。";
-        const etc_text_node = document.createTextNode(etc_text);
-        etc_div.appendChild(etc_text_node);
-        tomo_schedule.append(etc_div);
+        if (i > 2) {
+          const etc_div = document.createElement("div");
+          const etc_text =
+            "...他 " +
+            (array_tomo_date[0].length - 1 - i).toString() +
+            "件の日程があります。";
+          const etc_text_node = document.createTextNode(etc_text);
+          etc_div.appendChild(etc_text_node);
+          tomo_schedule.append(etc_div);
+
+          break;
+        }
       }
+      // console.log(array_today_date.length);
+      // console.log(array_tomo_date.length);
+      // if (array_today_date[0].length > 4) {
+      //   const etc_div = document.createElement("div");
+      //   const etc_text =
+      //     "...他 " +
+      //     (array_today_date[0].length - 4).toString() +
+      //     "件の日程があります。";
+      //   const etc_text_node = document.createTextNode(etc_text);
+      //   etc_div.appendChild(etc_text_node);
+      //   today_schedule.append(etc_div);
+      // }
+
+      // if (array_tomo_date[0].length > 4) {
+      //   const etc_div = document.createElement("div");
+      //   const etc_text =
+      //     "...他 " +
+      //     (array_tomo_date[0].length - 4).toString() +
+      //     "件の日程があります。";
+      //   const etc_text_node = document.createTextNode(etc_text);
+      //   etc_div.appendChild(etc_text_node);
+      //   tomo_schedule.append(etc_div);
+      // }
     });
 };
 // openModalButton.addEventListener("click", showModalWindow);
@@ -127,10 +164,6 @@ modalWindowOverlay.addEventListener("click", hideModalWindowOnBlur);
 // 슬라이크 전체 크기(width 구하기)
 const slide = document.querySelector(".slide");
 let slideWidth = slide.clientWidth;
-
-// 버튼 엘리먼트 선택하기
-const prevBtn = document.querySelector(".slide_prev_button");
-const nextBtn = document.querySelector(".slide_next_button");
 
 // 슬라이드 전체를 선택해 값을 변경해주기 위해 슬라이드 전체 선택하기
 const slideItems = document.querySelectorAll(".slide_item");
@@ -162,6 +195,7 @@ nextBtn.addEventListener("click", () => {
     // 슬라이드를 이동시키기 위한 offset 계산
     const offset = slideWidth * (currSlide - 1);
     // 각 슬라이드 아이템의 left에 offset 적용
+    console.log("offset", offset);
     slideItems.forEach((i) => {
       i.setAttribute("style", `left: ${-offset}px`);
     });
