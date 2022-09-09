@@ -88,6 +88,7 @@ app.post("/load", (req, res) => {
       } else {
         if (result.rowCount > 0) {
           res.send(result.rows);
+          // console.log("result", result.rows);
         } else res.send("0");
       }
     }

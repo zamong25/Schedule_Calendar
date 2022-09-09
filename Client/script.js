@@ -21,7 +21,7 @@ const weekdays = [
 ];
 let paddingDays;
 let daysInMonth;
-let dataArray = new Array();
+let dataArray = new Array(); //load할 때 데이터 받는 array변수
 let dataArrayIndex;
 
 function openModal(data, modify) {
@@ -305,7 +305,7 @@ function Init() {
       if (key == "date_no") {
         continue;
       }
-
+      // console.log("date_array", data);
       const eventTd = document.createElement("th");
       if (key == "day") {
         console.log(data[key]);
