@@ -17,6 +17,7 @@ const showModalWindow = () => {
   const next_day = 1 + date.getDate();
   const dateStr = year + "-" + month + "-" + day;
   const tomo_dateStr = year + "-" + month + "-" + next_day;
+  let dataArray = new Array();
 
   axios
     .post("http:localhost:3000/slide/", {
@@ -24,6 +25,17 @@ const showModalWindow = () => {
       tomo_dateStr: tomo_dateStr,
     })
     .then((result) => {
+      console.log("result.rows", result.data);
+
+      // result.data.map((c) => {
+      //   let data = {
+      //     date: c.date,
+      //     title: c.title,
+      //   };
+      //   dataArray.push(data);
+      // });
+
+      // console.log("dateArray", dateArray[0]);
       const today_time = document.getElementById("today_time_1");
       const today_schedule = document.getElementById("today_schedule_1");
       const tomo_time = document.getElementById("tomo_time_1");
@@ -52,10 +64,10 @@ const showModalWindow = () => {
       // console.log(tomo_obj);
       // console.log(array_today_date[0]);
 
-      array_today_date.push(Object.keys(today_obj).sort());
-      array_today_title.push(Object.values(today_obj).sort());
-      array_tomo_date.push(Object.keys(tomo_obj).sort());
-      array_tomo_title.push(Object.values(tomo_obj).sort());
+      array_today_date.push(Object.keys(today_obj));
+      array_today_title.push(Object.values(today_obj));
+      array_tomo_date.push(Object.keys(tomo_obj));
+      array_tomo_title.push(Object.values(tomo_obj));
       // console.log("array_today_date", array_today_date.length);
       // console.log("array_today_title", array_today_title);
 

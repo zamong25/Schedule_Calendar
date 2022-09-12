@@ -17,12 +17,13 @@ app.post("/slide", (req, res) => {
   const client = new Client(dbInfo);
   client.connect();
   client.query(
-    "select date, title from schedule where (date LIKE $1 or date LIKE $2)",
+    "select date, title from schedule where (date LIKE $1 or date LIKE $2) ORDER BY date, date_no",
     [dateStr + "%", tomo_dateStr + "%"],
     (err, result) => {
       if (err) {
         console.log("Error", err);
       } else {
+        console.log("result.rows_app", result.rows);
         // console.log(result.rows[0])
         res.send(result);
       }
