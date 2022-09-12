@@ -19,8 +19,8 @@ const weekdays = [
   "Friday",
   "Saturday",
 ];
-let paddingDays;
-let daysInMonth;
+let paddingDays; //캘린더에서 처음에 빈 날짜 padding변수
+let daysInMonth; //해당 달에 몇일 있는지 받는 변수
 let dataArray = new Array(); //load할 때 데이터 받는 array변수
 let dataArrayIndex;
 
@@ -43,7 +43,11 @@ function openModal(data, modify) {
   let minute;
 
   if (!modify) {
-    dayInputArea.innerText = getDay2(data);
+    //수정이 아닌 상태라면
+    // openModal(dataArray[index], true);
+    let week = ["日", "月", "火", "水", "木", "金", "土"];
+    let dayOfWeek = week[new Date(data).getDay()];
+    dayInputArea.innerText = dayOfWeek; //data - 2022-09-15
     dateInit.innerText = `${data.split("-")[1]}-${data.split("-")[2]}`;
 
     for (let i = 0; i < stateInit.length; i++) {
@@ -53,8 +57,16 @@ function openModal(data, modify) {
     referInit.value = "";
   } else {
     let date = data.date.split("-");
-    console.log(data.day);
-    dayInputArea.innerText = data.day;
+    console.log("data", data);
+    let data_num = data.day;
+    let week = ["日", "月", "火", "水", "木", "金", "土"];
+
+    for (let i = 0; i < 7; i++) {
+      if (data.day == week[i]) {
+        data_num = i;
+      }
+    }
+    dayInputArea.innerText = getDay2(data_num);
     dateInit.innerText = `${date[1]}-${date[2].split(" ")[0]}`;
     title.value = data.title;
 
@@ -219,8 +231,9 @@ function Init() {
       // let eventForDay;
 
       if (dataArray.length > 0) {
+        //일정이 있는 경우, dateArray에 데이터가 있는 경우
         dataArray.forEach((value, index) => {
-          let date = value.date.split(" ")[0];
+          let date = value.date.split(" ")[0]; //ex)2022-09-06
           if (date === dayString) {
             const eventDiv = document.createElement("div");
             eventDiv.classList.add("event");
@@ -228,7 +241,7 @@ function Init() {
             eventDiv.addEventListener("click", (event) => {
               event.stopPropagation();
               openModal(dataArray[index], true);
-              dataArrayIndex = index;
+              dataArrayIndex = index; //나중에 delete해주기위해 index를 저장해둔다
             });
             daySquareInnerText.appendChild(eventDiv);
 
@@ -312,6 +325,10 @@ function Init() {
         eventTd.innerText = getDay3(data[key]);
       } else eventTd.innerText = data[key];
 
+      // if (key == "sts") {
+      //   eventTd.innerText = getDay2(data[key]);
+      // } else eventTd.innerText = data[key];
+
       eventTr.appendChild(eventTd);
     }
 
@@ -334,6 +351,7 @@ function saveEvent() {
   if (eventTitleInput.value) {
     eventTitleInput.classList.remove("error");
 
+    // let day = document.getElementById("dayInputArea").innerText;
     let day = document.getElementById("dayInputArea").innerText;
     let date = document.getElementById("dateInit").innerText;
     let h = document.getElementById("timeInitHour").value;
@@ -341,10 +359,18 @@ function saveEvent() {
     let sts = document.getElementById("eventStatus").value;
     let cat = document.getElementById("categoryInput").value;
     let refer = document.getElementById("refer").value;
+    let day_num;
+
+    let week = ["日", "月", "火", "水", "木", "金", "土"];
+    for (let i = 0; i < 7; i++) {
+      if (week[i] == day) {
+        day_num = i;
+      }
+    }
 
     axios
       .post("http:localhost:3000/reg", {
-        day: day,
+        day: day_num,
         title: eventTitleInput.value,
         date: `${clicked} ${h}:${m}`,
         sts: sts,
@@ -376,9 +402,18 @@ function saveEvent() {
 function deleteEvent() {
   let data = dataArray[dataArrayIndex];
 
+  let day_num = data.day;
+
+  let week = ["日", "月", "火", "水", "木", "金", "土"];
+  for (let i = 0; i < 7; i++) {
+    if (week[i] == data.day) {
+      day_num = i;
+    }
+  }
+
   axios
     .post("http:localhost:3000/del", {
-      day: data.day,
+      day: day_num,
       title: data.title,
       date: data.date,
       date_no: data.date_no,
@@ -407,9 +442,16 @@ function ModifyEvent() {
   let refer = document.getElementById("refer").value;
   let newDate = data.date.split(" ");
 
+  let week = ["日", "月", "火", "水", "木", "金", "土"];
+  for (let i = 0; i < 7; i++) {
+    if (week[i] == day) {
+      day_num = i;
+    }
+  }
+
   const dataObj = {
     title: eventTitleInput.value,
-    day: day,
+    day: day_num,
     date: `${newDate[0]} ${h}:${m}`,
     date_no: data.date_no,
     cat: cat,
@@ -467,7 +509,7 @@ function getDay2(day) {
 
   var week = ["日", "月", "火", "水", "木", "金", "土"];
 
-  var dayOfWeek = new Date(day).getDay();
+  var dayOfWeek = week[new Date(day).getDay()];
 
   return dayOfWeek;
 }
