@@ -14,7 +14,7 @@ const showModalWindow = () => {
   const year = date.getFullYear();
   const month = ("0" + (date.getMonth() + 1)).slice(-2);
   const day = ("0" + date.getDate()).slice(-2);
-  const next_day = "0" + (1 + date.getDate());
+  const next_day = 1 + date.getDate();
   const dateStr = year + "-" + month + "-" + day;
   const tomo_dateStr = year + "-" + month + "-" + next_day;
 
@@ -62,6 +62,7 @@ const showModalWindow = () => {
       for (var i = 0; i < array_today_date[0].length; i++) {
         const first_div = document.createElement("div");
         const second_div = document.createElement("div");
+        second_div.classList.add("schedule_text_limit");
         const today_time_text = document.createTextNode(array_today_date[0][i]);
         const today_schedule_text = document.createTextNode(
           array_today_title[0][i]
@@ -92,6 +93,7 @@ const showModalWindow = () => {
       for (var i = 0; i < array_tomo_date[0].length; i++) {
         const third_div = document.createElement("div");
         const fourth_div = document.createElement("div");
+        fourth_div.classList.add("schedule_text_limit");
         const tomo_time_text = document.createTextNode(array_tomo_date[0][i]);
         const tomo_schedule_text = document.createTextNode(
           array_tomo_title[0][i]

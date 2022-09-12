@@ -55,6 +55,10 @@
 
   /* transition */
   transition: left 0.15s;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  float: left;
 }
 
 #modal .modal-footer {
@@ -106,15 +110,35 @@
   font-size: 17px;
   text-overflow: ellipsis;
 }
-
 .today_schedule_1 {
+  display: block;
+  width: 240px;
+  position: absolute;
+  top: 129px;
+  left: 160px;
+  font-size: 14px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.schedule_text_limit {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.tomo_schedule_1 {
+  display: block;
+  width: 240px;
   position: absolute;
   top: 129px;
   left: 160px;
   overflow: hidden;
   white-space: nowrap;
-  text-overflow: ellipsis;
   font-size: 14px;
+  text-overflow: ellipsis;
+  float: left;
 }
 
 .slide_button {
