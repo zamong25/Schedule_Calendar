@@ -137,8 +137,8 @@ app.post("/mod", (req, res) => {
   const client = new Client(dbInfo);
   client.connect();
   client.query(
-    'UPDATE public."schedule" SET title = $1, day_id = $2, date = $3,category = $4,state = $5,refer = $6 WHERE title = $7',
-    [title, day, date, cat, sts, refer, beforeTitle],
+    'UPDATE public."schedule" SET title = $1, day_id = $2, date = $3,category = $4,state = $5,refer = $6 WHERE date = $3',
+    [title, day, date, cat, sts, refer],
     (err, result) => {
       if (err) {
         console.log("Error", err);

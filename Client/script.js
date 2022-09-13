@@ -474,6 +474,8 @@ function ModifyEvent() {
     })
     .then((result) => {
       if (result.data === "OK") {
+        console.log("result.data", result.data);
+        console.log("ok");
         closeModal();
       }
     });
