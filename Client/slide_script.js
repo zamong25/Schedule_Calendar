@@ -13,11 +13,19 @@ const showModalWindow = () => {
 
   const year = date.getFullYear();
   const month = ("0" + (date.getMonth() + 1)).slice(-2);
-  const day = ("0" + date.getDate()).slice(-2);
+  console.log("date.getDate()", date.getDate());
+  let day;
+  if (date.getDate() < 10) {
+    day = ("0" + date.getDate()).slice(-2);
+  } else {
+    day = date.getDate();
+  }
   const next_day = 1 + date.getDate();
   const dateStr = year + "-" + month + "-" + day;
   const tomo_dateStr = year + "-" + month + "-" + next_day;
   let dataArray = new Array();
+  // console.log("dateStr", dateStr);
+  // console.log("tomo_dateStr", tomo_dateStr);
 
   axios
     .post("http:localhost:3000/slide/", {
