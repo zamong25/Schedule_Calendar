@@ -120,14 +120,14 @@ app.post("/del", (req, res) => {
 });
 
 app.post("/mod", (req, res) => {
-  const beforeTitle = req.body.beforeTitle;
+  const beforeDate = req.body.beforeDate;
   const title = req.body.title;
   const day = req.body.day;
   const date = req.body.date;
   const cat = req.body.cat;
   const sts = req.body.sts;
   const refer = req.body.refer;
-  console.log("modeTitle  " + beforeTitle);
+  console.log("beforeDate  " + beforeDate);
   console.log("title  " + title);
   console.log("day  " + day);
   console.log("date  " + date);
@@ -137,12 +137,13 @@ app.post("/mod", (req, res) => {
   const client = new Client(dbInfo);
   client.connect();
   client.query(
-    'UPDATE public."schedule" SET title = $1, day_id = $2, date = $3,category = $4,state = $5,refer = $6 WHERE date = $3',
-    [title, day, date, cat, sts, refer],
+    'UPDATE public."schedule" SET title = $1, day_id = $2, date = $3,category = $4,state = $5,refer = $6 WHERE date = $7',
+    [title, day, date, cat, sts, refer, beforeDate],
     (err, result) => {
       if (err) {
         console.log("Error", err);
       } else {
+        console.log("ok");
         res.send("OK");
       }
     }
