@@ -117,6 +117,14 @@
   font-size: 14px;
 }
 
+.schedule_text_limit {
+  display: block;
+  width: 60%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 .slide_button {
   /* layout */
   display: flex;

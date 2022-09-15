@@ -70,7 +70,19 @@ function openModal(data, modify) {
     dateInit.innerText = `${date[1]}-${date[2].split(" ")[0]}`;
     title.value = data.title;
 
-    stateInit[parseInt(data.sts)].selected = true;
+    let new_sts;
+
+    if (data.sts == " ") {
+      new_sts = " ";
+    } else if (data.sts == "進行中") {
+      new_sts = "1";
+    } else if (data.sts == "完了") {
+      new_sts = "2";
+    } else if (data.sts == "保留") {
+      new_sts = "3";
+    }
+
+    stateInit[parseInt(new_sts)].selected = true;
     categoryInit.value = data.cat;
     let _hour = data.date.split(" ");
     hour = _hour[1].split(":")[0];
@@ -321,7 +333,7 @@ function Init() {
       // console.log("date_array", data);
       const eventTd = document.createElement("th");
       if (key == "day") {
-        console.log(data[key]);
+        // console.log("data[key]", getDay3(data[key]));
         eventTd.innerText = getDay3(data[key]);
       } else eventTd.innerText = data[key];
 
@@ -368,12 +380,24 @@ function saveEvent() {
       }
     }
 
+    let new_sts;
+
+    if (sts == "0") {
+      new_sts = " ";
+    } else if (sts == "1") {
+      new_sts = "進行中";
+    } else if (sts == "2") {
+      new_sts = "完了";
+    } else if (sts == "3") {
+      new_sts = "保留";
+    }
+
     axios
       .post("http:localhost:3000/reg", {
         day: day_num,
         title: eventTitleInput.value,
         date: `${clicked} ${h}:${m}`,
-        sts: sts,
+        sts: new_sts,
         cat: cat,
         refer: refer,
       })
@@ -381,13 +405,14 @@ function saveEvent() {
         result.data.map((c) => {
           const data = {
             title: eventTitleInput.value,
-            day: day,
+            day: day_num,
             date: `${clicked} ${h}:${m}`,
             date_no: c.date_no,
             cat: cat,
-            sts: sts,
+            sts: new_sts,
             refer: refer,
           };
+          // console.log("data.day", data.day);
           dataArray.push(data);
         });
         closeModal();
@@ -437,7 +462,7 @@ function ModifyEvent() {
   let date = document.getElementById("dateInit").innerText;
   let h = document.getElementById("timeInitHour").value;
   let m = document.getElementById("timeInitMinut").value;
-  let sts = document.getElementById("eventStatus").value;
+  let sts = document.getElementById("eventStatus").value; //진행상태 value
   let cat = document.getElementById("categoryInput").value;
   let refer = document.getElementById("refer").value;
   let newDate = data.date.split(" ");
@@ -449,13 +474,25 @@ function ModifyEvent() {
     }
   }
 
+  let new_sts;
+
+  if (sts == "0") {
+    new_sts = " ";
+  } else if (sts == "1") {
+    new_sts = "進行中";
+  } else if (sts == "2") {
+    new_sts = "完了";
+  } else if (sts == "3") {
+    new_sts = "保留";
+  }
+
   const dataObj = {
     title: eventTitleInput.value,
     day: day_num,
     date: `${newDate[0]} ${h}:${m}`,
     date_no: data.date_no,
     cat: cat,
-    sts: sts,
+    sts: new_sts,
     refer: refer,
   };
 
