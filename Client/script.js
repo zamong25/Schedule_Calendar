@@ -73,7 +73,7 @@ function openModal(data, modify) {
     let new_sts;
 
     if (data.sts == " ") {
-      new_sts = " ";
+      new_sts = "0";
     } else if (data.sts == "進行中") {
       new_sts = "1";
     } else if (data.sts == "完了") {

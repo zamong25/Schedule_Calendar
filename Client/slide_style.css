@@ -109,17 +109,25 @@
 
 .today_schedule_1 {
   position: absolute;
-  top: 129px;
+  top: 135px;
   left: 160px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .schedule_text_limit {
   display: block;
-  width: 60%;
+  max-width: 270px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.schedule_text_limit2 {
+  display: block;
+  max-width: 270px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;

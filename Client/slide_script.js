@@ -113,7 +113,7 @@ const showModalWindow = () => {
       for (var i = 0; i < array_tomo_date[0].length; i++) {
         const third_div = document.createElement("div");
         const fourth_div = document.createElement("div");
-        fourth_div.classList.add("schedule_text_limit");
+        fourth_div.classList.add("schedule_text_limit2");
         const tomo_time_text = document.createTextNode(array_tomo_date[0][i]);
         const tomo_schedule_text = document.createTextNode(
           array_tomo_title[0][i]
